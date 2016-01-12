@@ -12,22 +12,43 @@ namespace InstructureCommit
     {
         static void Main(string[] args)
         {
+
+            Console.WriteLine("Student Information");
             //Step 1 Create a csv parser to bring in data
             foreach (var student in GetStudentData())
             {
-                Console.WriteLine("");
-                Console.WriteLine(student.Item1);
-                Console.WriteLine(student.Item2);
-                Console.WriteLine(student.Item3);
-                Console.WriteLine(student.Item4);
+                //The formatting is off as only a place holder. The correct data is still not in place.
+                Console.WriteLine("User Id\t Student Name\t Course Id\t State\t");
+                Console.WriteLine("{0}\t {1}\t {2}\t {3}\t\n",student.Item1, student.Item2, student.Item3, student.Item4);
+            }
+
+            Console.WriteLine("Course Information");
+            foreach (var course in GetCourseData())
+            {
+                //The formatting is off as only a place holder. The correct data is still not in place.
+                Console.WriteLine("Course Id\t Course Name\t Course Id\t State");
+                Console.WriteLine("{0}\t {1}\t {2}\n", course.Item1, course.Item2, course.Item3);
             }
 
 
-            foreach (var course in GetCourseData())
+            Console.WriteLine("My attempt at getting the course associated with the student");
+            var coursesWithStudents = from course in GetCourseData()
+                                      join student in GetStudentData()
+                                      on course.Item1 equals student.Item3
+                                      select course;
+            //select new {
+            //    course.Item2,
+            //    course.Item3,
+            //    student,
+
+
+            //};
+
+
+
+            foreach (var course in coursesWithStudents)
             {
-                Console.WriteLine(course.Item1);
                 Console.WriteLine(course.Item2);
-                Console.WriteLine(course.Item3);
             }
 
             Console.ReadKey();
