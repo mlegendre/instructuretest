@@ -1,0 +1,9 @@
+user_id,user_name,course_id,state
+1,Billy Bob,1,active
+2,Steve Smith,1,deleted
+3,Bobby Joe,2,active
+4,Mike Wizowsky,2,active
+5,Whiskey Bob,3,deleted
+6,Austin Powers,3,deleted
+7,Sam I Am,4,active
+8,Avalanche the dog,4,deleted
