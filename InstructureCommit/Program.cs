@@ -8,53 +8,16 @@ using System.IO;
 
 namespace InstructureCommit
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
 
-            Console.WriteLine("Student Information");
-            //Step 1 Create a csv parser to bring in data
-            foreach (var student in GetStudentData())
-            {
-                //The formatting is off as only a place holder. The correct data is still not in place.
-                Console.WriteLine("User Id\t Student Name\t Course Id\t State\t");
-                Console.WriteLine("{0}\t {1}\t {2}\t {3}\t\n",student.Item1, student.Item2, student.Item3, student.Item4);
-            }
 
-            Console.WriteLine("Course Information");
-            foreach (var course in GetCourseData())
-            {
-                //The formatting is off as only a place holder. The correct data is still not in place.
-                Console.WriteLine("Course Id\t Course Name\t Course Id\t State");
-                Console.WriteLine("{0}\t {1}\t {2}\n", course.Item1, course.Item2, course.Item3);
-            }
-
-
-            Console.WriteLine("My attempt at getting the course associated with the student");
-            var coursesWithStudents = from course in GetCourseData()
-                                      join student in GetStudentData()
-                                      on course.Item1 equals student.Item3
-                                      select course;
-            //select new {
-            //    course.Item2,
-            //    course.Item3,
-            //    student,
-
-
-            //};
-
-
-
-            foreach (var course in coursesWithStudents)
-            {
-                Console.WriteLine(course.Item2);
-            }
+            WriteOutput();
 
             Console.ReadKey();
-            //Step 2 Verify Csv file has correct headers and data
 
-            //Step 3 Output list of active courses and the users in the course
         }
 
         public static List<Tuple<int, string, int, string>> GetStudentData()
@@ -102,6 +65,38 @@ namespace InstructureCommit
                 }
 
                 return allCourses;
+            }
+        }
+
+        public static void WriteOutput()
+        {
+            foreach (var course in GetCourseData())
+            {
+                List<string> studentsInCourse = new List<string>();
+
+                foreach (var student in GetStudentData())
+                {
+                    if (course.Item1 == student.Item3 && course.Item3 != "deleted")
+                    {
+                        //course has a student
+                        studentsInCourse.Add(student.Item2);
+                    }
+                }
+
+                if (studentsInCourse != null)
+                {
+                    Console.WriteLine(course.Item2);
+                    foreach (var stu in studentsInCourse)
+                    {
+                        Console.WriteLine(stu);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("There were no students in {0}", course.Item2);
+                }
+
+                Console.WriteLine("---------------------------------------------------");
             }
         }
     }
