@@ -76,7 +76,7 @@ namespace InstructureCommit
 
                 foreach (var student in GetStudentData())
                 {
-                    if (course.Item1 == student.Item3 && course.Item3 != "deleted")
+                    if (course.Item1 == student.Item3 && course.Item3 != "deleted" && student.Item4 != "deleted")
                     {
                         //course has a student
                         studentsInCourse.Add(student.Item2);
